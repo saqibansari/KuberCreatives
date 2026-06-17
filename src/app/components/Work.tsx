@@ -214,7 +214,7 @@ function WorkCard({ project, index }: { project: (typeof projects)[0]; index: nu
             justifyContent: "space-between",
             padding: "32px",
             paddingTop: "40px",
-            overflowY: "auto",
+            overflow: "hidden",
             boxSizing: "border-box",
           }}
         >
@@ -266,8 +266,6 @@ function WorkCard({ project, index }: { project: (typeof projects)[0]; index: nu
                 color: "rgba(240,237,232,0.85)",
                 lineHeight: 1.5,
                 marginBottom: "20px",
-                maxHeight: "120px",
-                overflowY: "auto",
               }}
             >
               {project.description}
