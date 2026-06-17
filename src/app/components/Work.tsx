@@ -98,7 +98,7 @@ function WorkCard({ project, index }: { project: (typeof projects)[0]; index: nu
         style={{
           position: "relative",
           width: "100%",
-          aspectRatio: "4 / 3",
+          height: "clamp(320px, 36vw, 420px)",
           transformStyle: "preserve-3d",
           transform: hovered ? "rotateY(180deg)" : "rotateY(0deg)",
           transition: "transform 0.6s cubic-bezier(0.16,1,0.3,1)",
@@ -150,7 +150,7 @@ function WorkCard({ project, index }: { project: (typeof projects)[0]; index: nu
             style={{
               position: "absolute",
               inset: 0,
-              padding: "32px",
+              padding: "36px 30px",
               display: "flex",
               flexDirection: "column",
               justifyContent: "flex-end",
@@ -191,6 +191,7 @@ function WorkCard({ project, index }: { project: (typeof projects)[0]; index: nu
                 letterSpacing: "0.15em",
                 color: project.accent,
                 textTransform: "uppercase",
+                marginTop: "auto",
               }}
             >
               → {project.location}
@@ -212,10 +213,8 @@ function WorkCard({ project, index }: { project: (typeof projects)[0]; index: nu
             display: "flex",
             flexDirection: "column",
             justifyContent: "space-between",
-            padding: "32px",
-            paddingTop: "40px",
+            padding: "36px 30px",
             overflow: "hidden",
-            boxSizing: "border-box",
           }}
         >
           {/* Top accent bar */}
@@ -240,7 +239,6 @@ function WorkCard({ project, index }: { project: (typeof projects)[0]; index: nu
                 textTransform: "uppercase",
                 marginBottom: "16px",
                 opacity: 0.8,
-                marginTop: "8px",
               }}
             >
               PROJECT DETAILS
@@ -253,7 +251,7 @@ function WorkCard({ project, index }: { project: (typeof projects)[0]; index: nu
                 fontWeight: 800,
                 color: "#F0EDE8",
                 lineHeight: 1.2,
-                marginBottom: "16px",
+                marginBottom: "20px",
               }}
             >
               {project.title}
@@ -264,7 +262,7 @@ function WorkCard({ project, index }: { project: (typeof projects)[0]; index: nu
                 fontFamily: "'Inter', sans-serif",
                 fontSize: "13px",
                 color: "rgba(240,237,232,0.85)",
-                lineHeight: 1.5,
+                lineHeight: 1.6,
                 marginBottom: "20px",
               }}
             >
