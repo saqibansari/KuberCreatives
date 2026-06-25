@@ -56,7 +56,7 @@ const services = [
     title: "Software & UI",
     tagline: "Experiences that feel effortless.",
     desc: "Responsive applications, modern interfaces, and scalable digital products built for real users. Creativity, functionality, and usability in every interaction.",
-    img: "https://images.unsplash.com/photo-1699686312895-14c0d19b714e?w=800&h=600&fit=crop&auto=format",
+    img: "https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&w=1200&h=900&dpr=2",
     accent: "#A0C4E8",
   },
   {
@@ -97,9 +97,46 @@ function ServiceCard({
   index: number;
 }) {
   const cardRef = useRef<HTMLDivElement>(null);
+  const leaveTimerRef = useRef<number | null>(null);
   const [hovered, setHovered] = useState(false);
 
   /* scroll-reveal entrance */
+  useEffect(() => {
+    return () => {
+      if (leaveTimerRef.current) {
+        window.clearTimeout(leaveTimerRef.current);
+      }
+    };
+  }, []);
+
+  const clearLeaveTimer = () => {
+    if (leaveTimerRef.current) {
+      window.clearTimeout(leaveTimerRef.current);
+      leaveTimerRef.current = null;
+    }
+  };
+
+  const scheduleLeave = () => {
+    clearLeaveTimer();
+    leaveTimerRef.current = window.setTimeout(() => {
+      setHovered(false);
+      leaveTimerRef.current = null;
+    }, 70);
+  };
+
+  const onEnter = () => setHovered(true);
+  const onLeave = () => scheduleLeave();
+
+  const onMove = () => {
+    clearLeaveTimer();
+    if (!hovered) setHovered(true);
+  };
+
+  const onSafeEnter = () => {
+    clearLeaveTimer();
+    onEnter();
+  };
+
   useEffect(() => {
     const el = cardRef.current;
     if (!el) return;
@@ -123,24 +160,11 @@ function ServiceCard({
     return () => obs.disconnect();
   }, [index]);
 
-  /* 3-D tilt on mouse move */
-  const onMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const card = cardRef.current;
-    if (!card || window.innerWidth < 900) return;
-    const r = card.getBoundingClientRect();
-    const px = (e.clientX - r.left) / r.width - 0.5;
-    const py = (e.clientY - r.top) / r.height - 0.5;
-    card.style.transform = `perspective(900px) rotateX(${py * -5}deg) rotateY(${px * 6}deg) scale(1.02)`;
-  };
-  const onLeave = () => {
-    if (cardRef.current) cardRef.current.style.transform = "perspective(900px) rotateX(0deg) rotateY(0deg) scale(1)";
-    setHovered(false);
-  };
-
   return (
     <div
       ref={cardRef}
-      onMouseEnter={() => setHovered(true)}
+      data-cursor-expand
+      onMouseEnter={onSafeEnter}
       onMouseMove={onMove}
       onMouseLeave={onLeave}
       style={{
@@ -149,9 +173,8 @@ function ServiceCard({
         cursor: "default",
         borderRadius: "2px",
         border: `1px solid ${hovered ? service.accent + "55" : "rgba(255,255,255,0.07)"}`,
-        transition: "border-color 0.4s ease, transform 0.35s cubic-bezier(0.16,1,0.3,1), box-shadow 0.4s ease",
+        transition: "border-color 0.4s ease, box-shadow 0.4s ease",
         boxShadow: hovered ? `0 24px 60px rgba(0,0,0,0.5), 0 0 0 1px ${service.accent}22` : "0 4px 20px rgba(0,0,0,0.3)",
-        willChange: "transform",
       }}
     >
       {/* bg image */}
@@ -326,15 +349,17 @@ export function Services() {
     <section
       id="services"
       style={{
-        backgroundColor: "#080808",
+        position: "relative",
+        backgroundColor: "transparent",
         borderTop: "1px solid rgba(255,255,255,0.06)",
         paddingTop: "120px",
         paddingBottom: "140px",
+        overflow: "hidden",
       }}
     >
       <style>{KEYFRAMES}</style>
 
-      <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 48px" }}>
+      <div style={{ position: "relative", zIndex: 1, maxWidth: "1400px", margin: "0 auto", padding: "0 48px" }}>
         {/* header */}
         <div
           style={{

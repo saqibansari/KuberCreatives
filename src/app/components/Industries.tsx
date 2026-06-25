@@ -17,7 +17,8 @@ export function Industries() {
   return (
     <section
       style={{
-        backgroundColor: "#0A0A0A",
+        position: "relative",
+        backgroundColor: "transparent",
         borderTop: "1px solid rgba(255,255,255,0.06)",
         paddingTop: "120px",
         paddingBottom: "80px",

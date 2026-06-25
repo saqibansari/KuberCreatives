@@ -25,7 +25,7 @@ export function useReveal<T extends HTMLElement>(
           observer.disconnect();
         }
       },
-      { threshold }
+      { threshold, rootMargin: "0px 0px -8% 0px" }
     );
 
     observer.observe(el);

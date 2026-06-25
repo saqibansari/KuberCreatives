@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "../styles/fonts.css";
 import { CustomCursor } from "./components/CustomCursor";
+import { ImmersiveBackdrop } from "./components/ImmersiveBackdrop";
 import { LoginGate } from "./components/LoginGate";
 import { Nav } from "./components/Nav";
 import { Hero } from "./components/Hero";
@@ -38,7 +39,7 @@ export default function App() {
 
     const onScroll = () => {
       const total = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = window.scrollY / total;
+      const progress = total > 0 ? Math.min(Math.max(window.scrollY / total, 0), 1) : 0;
       progressBar.style.transform = `scaleX(${progress})`;
     };
 
@@ -50,6 +51,16 @@ export default function App() {
     };
   }, [entered]);
 
+  useEffect(() => {
+    if (!entered) return;
+
+    document.documentElement.style.removeProperty("--scene-pointer-x");
+    document.documentElement.style.removeProperty("--scene-pointer-y");
+    document.documentElement.style.removeProperty("--scene-pointer-shift-x");
+    document.documentElement.style.removeProperty("--scene-pointer-shift-y");
+    document.documentElement.style.removeProperty("--scene-scroll");
+  }, [entered]);
+
   if (!entered) {
     return <LoginGate onEnter={() => setEntered(true)} />;
   }
@@ -58,25 +69,26 @@ export default function App() {
     <div
       className="site-shell"
       style={{
-        backgroundColor: "#080808",
-        color: "#F0EDE8",
-        fontFamily: "'Inter', sans-serif",
+        backgroundColor: "transparent",
+        color: "#F5F2EA",
+        fontFamily: "'Satoshi', 'Inter', sans-serif",
         minHeight: "100vh",
         position: "relative",
       }}
     >
-      <div className="site-atmosphere" />
-      <div className="site-grid-noise" />
+      <ImmersiveBackdrop accent="#C9A96E" coolAccent="#7EB8D4" />
       <CustomCursor />
       <Nav />
-      <Hero />
-      <About />
-      <Stats />
-      <Services />
-      <Work />
-      <Industries />
-      <WhyUs />
-      <CTA />
+      <main aria-label="Kuber creatives showcase">
+        <Hero />
+        <About />
+        <Stats />
+        <Services />
+        <Work />
+        <Industries />
+        <WhyUs />
+        <CTA />
+      </main>
       <Footer />
     </div>
   );

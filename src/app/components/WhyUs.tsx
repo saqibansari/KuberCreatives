@@ -39,12 +39,14 @@ export function WhyUs() {
   return (
     <section
       style={{
-        backgroundColor: "#080808",
+        position: "relative",
+        backgroundColor: "transparent",
         borderTop: "1px solid rgba(255,255,255,0.06)",
         padding: "160px 48px",
+        overflow: "hidden",
       }}
     >
-      <div style={{ maxWidth: "1400px", margin: "0 auto" }}>
+      <div style={{ position: "relative", zIndex: 1, maxWidth: "1400px", margin: "0 auto" }}>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "120px" }}>
           <div>
             <div ref={labelRef}><SectionLabel>Why Kuber Creatives</SectionLabel></div>

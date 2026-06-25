@@ -1,15 +1,26 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 
 export function CustomCursor() {
   const dotRef = useRef<HTMLDivElement>(null);
   const ringRef = useRef<HTMLDivElement>(null);
-  const isDesktopPointer =
-    typeof window !== "undefined" &&
-    window.matchMedia("(pointer: fine)").matches &&
-    window.matchMedia("(hover: hover)").matches;
+  const [enabled, setEnabled] = useState(false);
 
   useEffect(() => {
-    if (!isDesktopPointer) return;
+    if (typeof window === "undefined") return;
+    const media = window.matchMedia("(pointer: fine) and (hover: hover)");
+    const update = () => setEnabled(media.matches);
+    update();
+    if (typeof media.addEventListener === "function") {
+      media.addEventListener("change", update);
+      return () => media.removeEventListener("change", update);
+    }
+
+    media.addListener(update);
+    return () => media.removeListener(update);
+  }, []);
+
+  useEffect(() => {
+    if (!enabled) return;
 
     const dot = dotRef.current;
     const ring = ringRef.current;
@@ -17,14 +28,18 @@ export function CustomCursor() {
 
     document.documentElement.classList.add("has-custom-cursor");
 
-    let mouseX = 0, mouseY = 0;
-    let ringX = 0, ringY = 0;
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+    let ringX = mouseX;
+    let ringY = mouseY;
     let raf: number;
 
     const onMove = (e: MouseEvent) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
-      dot.style.transform = `translate(${mouseX}px, ${mouseY}px)`;
+      dot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
+      dot.style.opacity = "1";
+      ring.style.opacity = "1";
     };
 
     const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
@@ -32,7 +47,7 @@ export function CustomCursor() {
     const animate = () => {
       ringX = lerp(ringX, mouseX, 0.1);
       ringY = lerp(ringY, mouseY, 0.1);
-      ring.style.transform = `translate(${ringX}px, ${ringY}px)`;
+      ring.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%)`;
       raf = requestAnimationFrame(animate);
     };
 
@@ -49,23 +64,37 @@ export function CustomCursor() {
       ring.style.borderColor = "rgba(201,169,110,0.4)";
     };
 
-    document.addEventListener("mousemove", onMove);
-    raf = requestAnimationFrame(animate);
+    const onHover = (e: Event) => {
+      const target = e.target as HTMLElement | null;
+      if (target?.closest("a, button, input, textarea, select, [data-cursor-expand]")) {
+        onEnter();
+      }
+    };
 
-    const links = document.querySelectorAll("a, button, [data-cursor-expand]");
-    links.forEach((el) => {
-      el.addEventListener("mouseenter", onEnter);
-      el.addEventListener("mouseleave", onLeave);
-    });
+    const onHoverOut = (e: Event) => {
+      const target = e.target as HTMLElement | null;
+      if (target?.closest("a, button, input, textarea, select, [data-cursor-expand]")) {
+        onLeave();
+      }
+    };
+
+    document.addEventListener("mousemove", onMove);
+    document.addEventListener("mouseover", onHover, true);
+    document.addEventListener("mouseout", onHoverOut, true);
+    dot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
+    ring.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%)`;
+    raf = requestAnimationFrame(animate);
 
     return () => {
       document.removeEventListener("mousemove", onMove);
+      document.removeEventListener("mouseover", onHover, true);
+      document.removeEventListener("mouseout", onHoverOut, true);
       cancelAnimationFrame(raf);
       document.documentElement.classList.remove("has-custom-cursor");
     };
-  }, [isDesktopPointer]);
+  }, [enabled]);
 
-  if (!isDesktopPointer) return null;
+  if (!enabled) return null;
 
   return (
     <>
@@ -81,9 +110,8 @@ export function CustomCursor() {
           borderRadius: "50%",
           pointerEvents: "none",
           zIndex: 9999,
-          transform: "translate(-50%, -50%)",
-          marginLeft: "-3px",
-          marginTop: "-3px",
+          transform: "translate3d(-200px, -200px, 0) translate(-50%, -50%)",
+          opacity: 0,
           transition: "none",
         }}
       />
@@ -99,8 +127,8 @@ export function CustomCursor() {
           borderRadius: "50%",
           pointerEvents: "none",
           zIndex: 9998,
-          marginLeft: "-16px",
-          marginTop: "-16px",
+          transform: "translate3d(-200px, -200px, 0) translate(-50%, -50%)",
+          opacity: 0,
           transition: "width 0.3s ease, height 0.3s ease, border-color 0.3s ease",
         }}
       />

@@ -1,5 +1,44 @@
 body {
-	background: #080808;
+	background: #071015;
+	color: #f5f2ea;
+}
+
+html,
+body,
+#root {
+	max-width: 100%;
+	overflow-x: clip;
+}
+
+html {
+	scrollbar-color: #36424e #05090d;
+}
+
+*::-webkit-scrollbar {
+	width: 12px;
+	height: 12px;
+}
+
+*::-webkit-scrollbar-track {
+	background: #05090d;
+}
+
+*::-webkit-scrollbar-thumb {
+	background: linear-gradient(180deg, #445262 0%, #303a45 100%);
+	border: 2px solid #05090d;
+	border-radius: 999px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+	background: linear-gradient(180deg, #5a6c80 0%, #3e4b59 100%);
+}
+
+
+:root {
+	--scene-accent: #e6b97d;
+	--scene-cyan: #85c4d7;
+	--scene-bg: #071015;
+	--scene-panel: rgba(9, 18, 24, 0.7);
 }
 
 .site-shell {
@@ -23,21 +62,21 @@ body {
 	height: 52vmax;
 	border-radius: 50%;
 	filter: blur(80px);
-	opacity: 0.18;
+	opacity: 0.24;
 	mix-blend-mode: screen;
 }
 
 .site-atmosphere::before {
 	top: -25vmax;
 	left: -20vmax;
-	background: radial-gradient(circle, rgba(201, 169, 110, 0.55), rgba(201, 169, 110, 0));
+	background: radial-gradient(circle, rgba(230, 185, 125, 0.62), rgba(230, 185, 125, 0));
 	animation: drift-orb-a 18s ease-in-out infinite alternate;
 }
 
 .site-atmosphere::after {
 	bottom: -30vmax;
 	right: -18vmax;
-	background: radial-gradient(circle, rgba(95, 130, 200, 0.35), rgba(95, 130, 200, 0));
+	background: radial-gradient(circle, rgba(133, 196, 215, 0.45), rgba(133, 196, 215, 0));
 	animation: drift-orb-b 22s ease-in-out infinite alternate;
 }
 
@@ -47,12 +86,12 @@ body {
 	pointer-events: none;
 	z-index: 2;
 	background-image:
-		linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
-		linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-		radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.035), transparent 60%);
-	background-size: 90px 90px, 90px 90px, 100% 100%;
+		linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+		linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+		radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.05), transparent 60%);
+	background-size: 72px 72px, 72px 72px, 100% 100%;
 	mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), transparent 80%);
-	opacity: 0.32;
+	opacity: 0.22;
 }
 
 .site-grid-noise::after {
@@ -98,7 +137,13 @@ body {
 }
 
 html.has-custom-cursor,
-html.has-custom-cursor * {
+html.has-custom-cursor body,
+html.has-custom-cursor a,
+html.has-custom-cursor button,
+html.has-custom-cursor input,
+html.has-custom-cursor textarea,
+html.has-custom-cursor select,
+html.has-custom-cursor [role="button"] {
 	cursor: none !important;
 }
 
@@ -161,6 +206,15 @@ html.has-custom-cursor * {
 	.site-grid-noise {
 		opacity: 0.18;
 	}
+
+	.scene-panel,
+	.scene-panel-a,
+	.scene-panel-b,
+	.scene-panel-c {
+		transform: none;
+		margin: 12px;
+		border-radius: 16px;
+	}
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -171,6 +225,15 @@ html.has-custom-cursor * {
 		animation: none !important;
 		transform: none !important;
 		opacity: 1 !important;
+	}
+
+	.site-lattice,
+	.scene-panel,
+	.scene-panel-a,
+	.scene-panel-b,
+	.scene-panel-c {
+		transform: none !important;
+		transition: none !important;
 	}
 
 	.interactive-lift {

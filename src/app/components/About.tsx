@@ -12,7 +12,9 @@ export function About() {
     <section
       id="about"
       style={{
-        backgroundColor: "#080808",
+        position: "relative",
+        backgroundColor: "transparent",
+        overflow: "hidden",
         padding: "160px 48px",
         maxWidth: "1400px",
         margin: "0 auto",

@@ -44,15 +44,49 @@ const projects = [
     title: "Mercedes-Benz",
     category: "Commercial Photography",
     location: "GCC",
-    img: "https://images.unsplash.com/photo-1652241802-296f70b03df0?w=900&h=600&fit=crop&auto=format",
+    img: "https://images.pexels.com/photos/120049/pexels-photo-120049.jpeg?auto=compress&cs=tinysrgb&w=1200&h=900&dpr=2",
     accent: "#E8B4A0",
-    description: "Premium lifestyle visuals capturing luxury and precision engineering.",
+    description: "AMG-focused premium visuals capturing luxury, performance, and precision engineering.",
   },
 ];
 
 function WorkCard({ project, index }: { project: (typeof projects)[0]; index: number }) {
   const ref = useRef<HTMLDivElement>(null);
+  const leaveTimerRef = useRef<number | null>(null);
   const [hovered, setHovered] = useState(false);
+
+  useEffect(() => {
+    return () => {
+      if (leaveTimerRef.current) {
+        window.clearTimeout(leaveTimerRef.current);
+      }
+    };
+  }, []);
+
+  const clearLeaveTimer = () => {
+    if (leaveTimerRef.current) {
+      window.clearTimeout(leaveTimerRef.current);
+      leaveTimerRef.current = null;
+    }
+  };
+
+  const onEnter = () => {
+    clearLeaveTimer();
+    setHovered(true);
+  };
+
+  const onLeave = () => {
+    clearLeaveTimer();
+    leaveTimerRef.current = window.setTimeout(() => {
+      setHovered(false);
+      leaveTimerRef.current = null;
+    }, 70);
+  };
+
+  const onMove = () => {
+    clearLeaveTimer();
+    if (!hovered) setHovered(true);
+  };
 
   useEffect(() => {
     const el = ref.current;
@@ -81,8 +115,10 @@ function WorkCard({ project, index }: { project: (typeof projects)[0]; index: nu
   return (
     <div
       ref={ref}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      data-cursor-expand
+      onMouseEnter={onEnter}
+      onMouseMove={onMove}
+      onMouseLeave={onLeave}
       style={{
         cursor: "pointer",
         perspective: "1000px",
@@ -342,12 +378,14 @@ export function Work() {
     <section
       id="work"
       style={{
-        backgroundColor: "#080808",
+        position: "relative",
+        backgroundColor: "transparent",
         borderTop: "1px solid rgba(255,255,255,0.06)",
         padding: "140px 48px",
+        overflow: "hidden",
       }}
     >
-      <div style={{ maxWidth: "1400px", margin: "0 auto" }}>
+      <div style={{ position: "relative", zIndex: 1, maxWidth: "1400px", margin: "0 auto" }}>
         <div
           style={{
             display: "flex",

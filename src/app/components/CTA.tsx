@@ -49,24 +49,11 @@ export function CTA() {
       id="contact"
       style={{
         position: "relative",
-        backgroundColor: "#080808",
+        backgroundColor: "transparent",
         overflow: "hidden",
         borderTop: "1px solid rgba(255,255,255,0.06)",
       }}
     >
-      {/* Parallax background */}
-      <div
-        ref={bgRef}
-        style={{
-          position: "absolute",
-          inset: "-15%",
-          backgroundImage: `url(https://images.unsplash.com/photo-1735013189446-54bc1851fe6b?w=1600&h=1200&fit=crop&auto=format)`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          opacity: 0.12,
-          willChange: "transform",
-        }}
-      />
       <div
         style={{
           position: "absolute",
