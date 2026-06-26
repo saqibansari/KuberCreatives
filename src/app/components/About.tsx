@@ -2,11 +2,11 @@ import { useReveal } from "./useReveal";
 import { SectionLabel } from "./SectionLabel";
 
 export function About() {
-  const labelRef = useReveal<HTMLDivElement>({ delay: 0 });
-  const headRef = useReveal<HTMLHeadingElement>({ delay: 100 });
-  const textRef = useReveal<HTMLParagraphElement>({ delay: 220 });
+  const labelRef = useReveal<HTMLDivElement>({ delay: 0, direction: "right" });
+  const headRef = useReveal<HTMLHeadingElement>({ delay: 100, direction: "right" });
+  const textRef = useReveal<HTMLParagraphElement>({ delay: 220, direction: "up" });
   const imgRef = useReveal<HTMLDivElement>({ delay: 80, direction: "left" });
-  const statsRef = useReveal<HTMLDivElement>({ delay: 300 });
+  const statsRef = useReveal<HTMLDivElement>({ delay: 300, direction: "right" });
 
   return (
     <section

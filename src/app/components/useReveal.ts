@@ -1,16 +1,23 @@
 import { useEffect, useRef } from "react";
 
 export function useReveal<T extends HTMLElement>(
-  options: { threshold?: number; delay?: number; direction?: "up" | "left" } = {}
+  options: { threshold?: number; delay?: number; direction?: "up" | "left" | "right" | "down" } = {}
 ) {
   const ref = useRef<T>(null);
-  const { threshold = 0.15, delay = 0, direction = "up" } = options;
+  const { threshold = 0.15, delay = 0, direction = "right" } = options;
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
 
-    const initial = direction === "up" ? "translateY(60px)" : "translateX(-40px)";
+    const initial =
+      direction === "up"
+        ? "translateY(60px)"
+        : direction === "down"
+          ? "translateY(-60px)"
+          : direction === "left"
+            ? "translateX(-40px)"
+            : "translateX(40px)";
     el.style.opacity = "0";
     el.style.transform = initial;
 

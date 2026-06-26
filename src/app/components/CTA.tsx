@@ -7,9 +7,9 @@ export function CTA() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [sent, setSent] = useState(false);
-  const headRef = useReveal<HTMLHeadingElement>({ delay: 0 });
-  const labelRef = useReveal<HTMLDivElement>({ delay: 0 });
-  const formRef = useReveal<HTMLFormElement>({ delay: 200 });
+  const headRef = useReveal<HTMLHeadingElement>({ delay: 0, direction: "right" });
+  const labelRef = useReveal<HTMLDivElement>({ delay: 0, direction: "right" });
+  const formRef = useReveal<HTMLFormElement>({ delay: 200, direction: "left" });
   const bgRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

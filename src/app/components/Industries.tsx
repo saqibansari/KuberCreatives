@@ -10,9 +10,9 @@ const industries = [
 ];
 
 export function Industries() {
-  const labelRef = useReveal<HTMLDivElement>({ delay: 0 });
-  const headRef = useReveal<HTMLHeadingElement>({ delay: 100 });
-  const textRef = useReveal<HTMLParagraphElement>({ delay: 200 });
+  const labelRef = useReveal<HTMLDivElement>({ delay: 0, direction: "right" });
+  const headRef = useReveal<HTMLHeadingElement>({ delay: 100, direction: "right" });
+  const textRef = useReveal<HTMLParagraphElement>({ delay: 200, direction: "up" });
 
   return (
     <section

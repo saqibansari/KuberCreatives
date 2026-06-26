@@ -32,9 +32,9 @@ const punchlines = [
 ];
 
 export function WhyUs() {
-  const labelRef = useReveal<HTMLDivElement>({ delay: 0 });
-  const headRef = useReveal<HTMLHeadingElement>({ delay: 100 });
-  const quoteRef = useReveal<HTMLDivElement>({ delay: 200 });
+  const labelRef = useReveal<HTMLDivElement>({ delay: 0, direction: "right" });
+  const headRef = useReveal<HTMLHeadingElement>({ delay: 100, direction: "right" });
+  const quoteRef = useReveal<HTMLDivElement>({ delay: 200, direction: "left" });
 
   return (
     <section
@@ -122,7 +122,7 @@ export function WhyUs() {
 }
 
 function ReasonItem({ reason, index }: { reason: (typeof reasons)[0]; index: number }) {
-  const ref = useReveal<HTMLDivElement>({ delay: index * 100 });
+  const ref = useReveal<HTMLDivElement>({ delay: index * 100, direction: "right" });
 
   return (
     <div
@@ -177,7 +177,7 @@ function ReasonItem({ reason, index }: { reason: (typeof reasons)[0]; index: num
 }
 
 function PunchLine({ text, index }: { text: string; index: number }) {
-  const ref = useReveal<HTMLDivElement>({ delay: index * 80 });
+  const ref = useReveal<HTMLDivElement>({ delay: index * 80, direction: "left" });
 
   return (
     <div
