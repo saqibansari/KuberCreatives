@@ -52,7 +52,7 @@ export function Nav() {
             border: "none",
             background: "transparent",
             fontFamily: "'Playfair Display', serif",
-            fontSize: "24px",
+            fontSize: "20px",
             fontWeight: 700,
             color: "#f5f2ea",
             letterSpacing: "0.02em",
@@ -60,7 +60,7 @@ export function Nav() {
             padding: 0,
           }}
         >
-          KUBER<span style={{ color: "#e6b97d" }}>.</span>
+          KUBER CREATIVES<span style={{ color: "#e6b97d" }}>.</span>
         </button>
 
         <div className="nav-desktop-links" style={{ display: "flex", alignItems: "center", gap: "26px" }}>
