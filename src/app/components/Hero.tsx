@@ -1,7 +1,7 @@
 import { useRef } from "react";
 
 const creativeGifOptions = {
-  kineticType: "https://media.giphy.com/media/3o7aD2saalBwwftBIY/giphy.gif",
+  kineticType: "https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExb2Vzd2c0N2JvaTd0bHI0eTIzOGx6ZWxrcmpheTQyNXkyZnhneDRobSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/FQrKPsolkooUTalcMx/giphy.gif",
   designStudio: "https://media.giphy.com/media/l0HlNQ03J5JxX6lva/giphy.gif",
   colorFlow: "https://media.giphy.com/media/xTiTnxpQ3ghPiB2Hp6/giphy.gif",
 } as const;
